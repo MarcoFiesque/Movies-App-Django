@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+<section class='layout text-center'>
+    {% if movie_category %}
+        <h3 class="mb-5">{{movie_category|title}}</h3>
+    {% endif %}
+    {% if movie_language %}
+        <h3 class="mb-5">{{movie_language | title}}</h3>
+    {% endif %}
+    {% if year %}
+        <h3 class="mb-5">Films de l'année {{year|date:"Y"}}</h3>
+    {% endif %}
+    <div class="movies row mb-5">
+        {%  for movie in object_list%}
+            <div class="mov col">
+                <a href="{% url 'movies:movie_detail' movie.slug %}">
+                    <img class="img-fluid" src="{{movie.image.url}}" alt="{{movie.title}}">
+                    <h2 class="movietitle">{{movie.title}}</h2>
+                </a>
+            </div>
+        {% empty %}
+            <h3 class="alert alert-warning my-5 mx-auto">Aucun film dans cette catégorie</h3>
+        {% endfor %}
+    </div>
+    {% comment %} {% if page_obj.has_other_pages %} {% endcomment %}
+    {% if is_paginated %}
+        
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a></li>
+                {% else %}
+                    <li class="disabled page-item"><a class="page-link" >&laquo; first</a></li>
+                    <li class="disabled page-item"><a class="page-link" >Prev</a></li>
+                {% endif %}
+
+                {% for page in page_obj.paginator.page_range %}
+                    {% if page_obj.number == page %}
+                        <li class="page-item"><a class="page-link" >{{page}}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a></li>
+                {% else %}
+                    <li class="disabled page-item"><a class="page-link" >Next</a></li>
+                    <li class="disabled page-item"><a class="page-link" >last &raquo;</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+</section>
+{% endblock content %}

@@ -1,0 +1,122 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+li{
+  list-style: none;  
+}
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: rgb(21, 20, 20);
+    color: white;
+}
+section{
+    background-color: rgb(36, 33, 33);
+    padding: 1rem 2rem;
+    margin-bottom: 3rem;
+}
+.homeslider{
+    margin-bottom: 3rem;
+}
+.navbar{
+    height: 7rem;
+}
+.navbar img{
+    max-height: 90%;
+}
+.pagination .page_link{
+    color: white !important;
+    background-color: blue !important;
+}
+.layout{
+    margin: 0 10rem;
+}
+.links{
+    display: flex;   
+}
+.links>li{
+    margin-right: 10px;
+    padding-left: 0;
+    margin-left: 0;
+}
+.navbar{
+    font-size: 1.2rem !important;
+}
+.search-input{
+    background-color: inherit;
+    border: none;
+}
+.search-input:hover{
+    border-bottom: 1px solid white;
+    border-radius: 0;
+}
+.search-btn:hover{
+    text-decoration: none;
+}
+
+.carousel .carousel-item{
+    height: 65vh;
+}
+.carousel-caption{
+    top: 20%;
+    font-weight: 700;
+    text-align: left;
+    transform: translateX(-5%);
+    color: #fefefe;
+    text-shadow: 1px 1px 0 #333;
+}
+.carousel-caption >.captioninside>.playbutton{
+    background-color: red !important;
+    padding: 10px 20px;
+    color: white;
+    font-weight: 700;
+}
+.carousel-item img {
+    position: absolute;
+    object-fit:fill;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    height: 100%;
+    padding: 0;
+}
+.movie_detail_text{
+    color: red;
+}
+.relatedmovie{
+    border-radius: 0;
+    margin: 5px;
+    text-align: center;
+    width: 15rem;
+    /* height: 19rem; */
+    display: flex;
+    flex-direction: column;
+}
+.movie_card_img{
+    height: 17rem;
+    /* width: 100%; */
+    display: block;
+    width: 15rem;
+
+}
+.relatedname{
+    color: white;
+}
+
+.links a{
+    border-radius: 0;
+}
+
+.swiper {
+    width: 190px;
+    height: 320px;
+  }
+
+  .swiper .card{
+    background-color: #000;
+}

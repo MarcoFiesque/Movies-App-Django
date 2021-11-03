@@ -1,0 +1,172 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+  <head>
+    <title>
+    {% block title %}
+        Title
+    {% endblock title  %}
+    </title>
+    {% block head %}
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- Custom css -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <!-- Font awesome -->
+        <script src="https://kit.fontawesome.com/96486db8a9.js" crossorigin="anonymous"></script>
+
+        <!-- Swipper CDN -->
+        <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+        <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+
+    {% endblock head %}
+  </head>
+  <body class="min-vh-100 d-flex flex-column">
+        {% block header %}
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <a class="navbar-brand h-100" href="{% url 'home' %}">
+                <img class="img-fluid" src="{% static 'img/mymdb.png' %}" alt="Mymdb">
+            </a>
+            <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation"></button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item ml-5">
+                        <a class="nav-link" href="{% url 'home' %}">Accueil <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'movies:movies_list' %}">Movies</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Genres</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="{%url 'movies:movie_category' 'action'%}">Action</a>
+                            <a class="dropdown-item" href="{%url 'movies:movie_category' 'comedy'%}">Comedie</a>
+                            <a class="dropdown-item" href="{%url 'movies:movie_category' 'horror'%}">Horreur</a>
+                            <a class="dropdown-item" href="{%url 'movies:movie_category' 'fantasy'%}">Fantaisie</a>
+                            <a class="dropdown-item" href="{%url 'movies:movie_category' 'science-fiction'%}">Science-Fiction</a>
+                        </div>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Langage</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="{%url 'movies:movie_language' 'english'%}">Anglais</a>
+                            <a class="dropdown-item" href="{%url 'movies:movie_language' 'french'%}">Français</a>
+                        </div>
+                    </li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Langage</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="{%url 'movies:movie_language' 'english'%}">Anglais</a>
+                            <a class="dropdown-item" href="{%url 'movies:movie_language' 'french'%}">Français</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Année</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownId">
+                            <a class="dropdown-item" href="{% url 'movies:movie_year' year=2021 %}">2021</a>
+                            <a class="dropdown-item" href="{% url 'movies:movie_year' year=2020 %}">2020</a>
+                            <a class="dropdown-item" href="{% url 'movies:movie_year' year=2019 %}">2019</a>
+                            <a class="dropdown-item" href="{% url 'movies:movie_year' year=2018 %}">2018</a>
+                            <a class="dropdown-item" href="{% url 'movies:movie_year' year=2017 %}">2017</a>
+                        </div>
+                    </li>
+                    <li class="nav-item ml-5">
+
+                        <form class="form-inline my-auto" method="GET" action="{% url 'movies:movie_search' %}">
+                            <input class="form-control mr-sm-2 search-input" name="query" value="{{request.GET.query}}" type="text" placeholder="Rechercher...">
+                            <button class="btn btn-link my-2 my-sm-0 search-btn text-white" type="submit"><i class="fas fa-search fa-2x"></i></button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        {% endblock header %}
+        <div class="slider homeslider">
+            <div id="carouselSwiper" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                {% for movie in slider_movies %}
+                    <div class="carousel-item {% if forloop.counter0 == 0 %} active{% endif %}">
+                        <img class="d-block w-100 carousel-image" src="{{movie.banner.url }}" alt="{{movie.title}}">
+                        <div class="carousel-caption">
+                            <div class="captioninside">
+                                <h3>{{movie.title | title}}</h3>
+                                <p>{{movie.description}}</p>
+                                <a href="{% url 'movies:movie_detail' movie.slug %}" class="playbutton btn">Lecture</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+                <a class="carousel-control-prev" href="#carouselSwiper" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselSwiper" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <main class="flex-fill mt-4 content">
+            {% block content %}
+
+            {% endblock content %}
+        </main>
+    
+    <footer class="footer pt-4 bg-secondary container-fluid text-white">
+        {% block footer %}
+            <div class="row no-gutters justify-content-around py-4">
+                <div class="col-auto">
+                    <div class="footer-menu">
+                        <ul>
+                            <li><a href="/">Accueil</a></li>
+                            <li><a href="/">Contact</a></li>
+                            <li><a href="/">Termes et conditions</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="tags">
+                        <ul>
+                            <li>
+                                Regarder des bandes annonces gratuites
+                            </li>
+                            <li>
+                                Bandes annonces de films
+                            </li>
+                            <li>
+                                Bandes annonces de films en VOSTE
+                            </li>
+                            <li>
+                                Bandes annonces des nouveaux films
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="copyright text-white text-center mx-auto pb-3">
+                    Copyright &copy;-2021
+                </div>
+            </div>
+            
+        {% endblock  %}
+    </footer>
+    
+    {% block js %}
+    {% endblock  %}
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+  </body>
+</html>
